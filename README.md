@@ -1,6 +1,46 @@
 Transition-based Neural Parser
 ============================
 
+## Fork description
+
+### Install instructions
+You will require Python 3.8 and CUDA 11.7 to run the following code. First, create and activate a virtual environment with Python 3.8. Then, install this parser using 
+```bash
+~ pip install git+https://github.com/pournaki/transition-amr-parser
+```
+Then, install the appropriate version of `torch-scatter` using
+```bash
+~ pip install torch-scatter -f https://data.pyg.org/whl/torch-1.13.1+cu117.html --no-cache-dir
+```
+
+### Parsing a sentence with a pre-trained model
+```python
+from transition_amr_parser.parse import AMRParser
+
+# Download and save a model named AMR3.0 to cache
+parser = AMRParser.from_pretrained('AMR3-structbart-L')
+tokens, positions = parser.tokenize('The girl travels and visits places')
+
+# Use parse_sentence() for single sentences or parse_sentences() for a batch
+annotations, machines = parser.parse_sentence(tokens)
+
+# Print Penman notation
+print(annotations)
+
+# Print Penman notation without JAMR, with ISI
+amr = machines.get_amr()
+print(amr.to_penman(jamr=False, isi=True))
+
+# Plot the graph (requires matplotlib)
+amr.plot()
+```
+
+### Changelog
+`2024-10-18` Remove `pyproject.toml` which prevents dependencies to be installed with `pip git+`  
+`2024-10-18` Allow for sentences without roots in batch processing. Useful for processing of large corpora with artifacts.
+
+---
+
 State-of-the-Art Abstract Meaning Representation (AMR) parsing, see [papers
 with code](https://paperswithcode.com/task/amr-parsing). Models both
 distribution over graphs and aligments with a transition-based approach. Parser
