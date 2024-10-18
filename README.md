@@ -4,13 +4,17 @@ Transition-based Neural Parser
 ## Fork description
 
 ### Install instructions
-You will require Python 3.8 and CUDA 11.7 to run the following code. First, create and activate a virtual environment with Python 3.8. Then, install this parser using 
+The setup requires Python 3.8 (and CUDA 11.7 for GPU support). It is tested on Linux (Debian 12, Intel Xeon E7-8867 v3) and macOS (14.6.1, M3).
+
+First, create and activate a virtual environment with Python 3.8. Then, install the parser using 
 ```bash
+## Linux with GPU support
 ~ pip install git+https://github.com/pournaki/transition-amr-parser
-```
-Then, install the appropriate version of `torch-scatter` using
-```bash
 ~ pip install torch-scatter -f https://data.pyg.org/whl/torch-1.13.1+cu117.html --no-cache-dir
+
+## macOS or Linux without GPU
+~ pip install git+https://github.com/pournaki/transition-amr-parser
+~ pip install torch-scatter -f https://data.pyg.org/whl/torch-1.13.1+cpu.html --no-cache-dir
 ```
 
 ### Parsing a sentence with a pre-trained model
