@@ -1284,13 +1284,16 @@ class AMRStateMachine():
         )
 
         # create an AMR class
-        amr = AMR(tokens, nodes, edges, root, alignments=alignments)
+        # but only if there is a root!
+        if root != None:
+            amr = AMR(tokens, nodes, edges, root, alignments=alignments)
 
-        # use valid node names
-        if node_map is None:
-            node_map = amr.get_node_id_map()
-        amr.remap_ids(node_map)
-
+            # use valid node names
+            if node_map is None:
+                node_map = amr.get_node_id_map()
+            amr.remap_ids(node_map)
+        else:
+            amr = None            
         return amr
 
     def get_annotation(self, node_map=None, jamr=False, no_isi=False):
@@ -1305,7 +1308,10 @@ class AMRStateMachine():
 
         else:
             amr = self.get_amr(node_map=node_map)
-            return amr.to_penman(jamr=jamr, isi=not no_isi)
+            if amr != None:
+                return amr.to_penman(jamr=jamr, isi=not no_isi)
+            else:
+                return "<NAN>"
 
 
 def get_ngram(sequence, order):
