@@ -838,7 +838,7 @@ class AMRParser:
                         batch_data["word2piece_scattered_indices"][i]
                     )
                 ))
-        print(len(bert_data))
+        # print(len(bert_data))
         assert len(bert_data) == len(sentences)
         return bert_data
 
@@ -864,7 +864,7 @@ class AMRParser:
                 copy.deepcopy(wordpieces_roberta),
                 copy.deepcopy(wordpieces_scattered_indices)
             ))
-        print(len(bart_data))
+        # print(len(bart_data))
         assert len(bart_data) == len(sentences)
         return bart_data
 
@@ -1013,7 +1013,7 @@ class AMRParser:
         # max batch_size
         if len(batch) < batch_size:
             batch_size = len(batch)
-        print("Running on batch size: " + str(batch_size))
+        # print("Running on batch size: " + str(batch_size))
 
         sentences = []
         # The model expects <ROOT> token at the end of the input sentence
