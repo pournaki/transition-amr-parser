@@ -1311,7 +1311,7 @@ class AMRStateMachine():
             if amr != None:
                 return amr.to_penman(jamr=jamr, isi=not no_isi)
             else:
-                return "<NAN>"
+                return "<NO_ROOT>"
 
 
 def get_ngram(sequence, order):
