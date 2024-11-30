@@ -1,3 +1,5 @@
+.DS_Store
+
 # These should not be commited
 # environment setter. May contain keys and other THIS CAN NOT BE COMMITED
 set_environment.sh
