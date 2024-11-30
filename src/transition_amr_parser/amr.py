@@ -663,9 +663,9 @@ def force_rooted_connected_graph(nodes, edges, root, prune=False,
 
 
 def create_valid_amr(tokens, nodes, edges, root, alignments):
-
-    if root is None:
-        print(yellow_font('WARNING: missing root'))
+    
+    # if root is None:
+    #     print(yellow_font('WARNING: missing root'))
 
     # TODO: This should be prevented upstream
     for nid, nname in list(nodes.items()):
@@ -675,8 +675,8 @@ def create_valid_amr(tokens, nodes, edges, root, alignments):
     # rooted and connected
     # NOTE: be careful not to overwrite edges or root
     root, edges = force_rooted_connected_graph(nodes, list(edges), root)
-    if any(e[1] == AMR.default_rel for e in edges):
-        print(yellow_font('WARNING: disconnected graphs'))
+    # if any(e[1] == AMR.default_rel for e in edges):
+    #     print(yellow_font('WARNING: disconnected graphs'))
 
     # TODO: Unclear if necessary depending on printer
     # nodes, edges = prune_mini_cycles(nodes, edges, root)
@@ -1499,7 +1499,7 @@ def read_jamr_string(jamr_text):
             if s in nodes and t in nodes:
                 new_edges.append((s, label, t))
             else:
-                print(yellow_font('WARNING: edge with extra node (ignored)'))
+                # print(yellow_font('WARNING: edge with extra node (ignored)'))
                 print((s, label, t))
         edges = new_edges
 
