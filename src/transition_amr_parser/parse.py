@@ -990,13 +990,13 @@ class AMRParser:
         assert isinstance(sentence, str)
         return protected_tokenizer(sentence)
 
-    def parse_sentence(self, tokens, **kwargs):
-        annotations, decoding_data = self.parse_sentences([tokens], **kwargs)
+    def parse_sentence(self, tokens, progress=True, **kwargs):
+        annotations, decoding_data = self.parse_sentences([tokens], progress=progress, **kwargs)
         return annotations[0], decoding_data[0]
 
     def parse_sentences(self, batch, batch_size=128, roberta_batch_size=128,
                         gold_amrs=None, force_actions=None, beam=1, jamr=False,
-                        no_isi=False, unicode_normalize=True):
+                        no_isi=False, unicode_normalize=True, progress=True):
         """parse a list of sentences.
 
         Args:
@@ -1005,6 +1005,9 @@ class AMRParser:
             roberta_batch_size (int, optional): RoBerta batch size. Defaults to
             10.
         """
+        # resolve progress parameter
+        disable_progressbar = not progress
+
         # check if model is bartsv and force_actions are given
         if 'bartsv' in self.model_args.arch and force_actions is not None:
             raise Exception(
@@ -1034,7 +1037,7 @@ class AMRParser:
         data_iterator = self.get_iterator(data, batch_size)
         # Loop over batches of sentences
         completed_machines = {}
-        for sample in tqdm(data_iterator, desc='decoding'):
+        for sample in tqdm(data_iterator, desc='decoding', disable=disable_progressbar):
             # move to device
             sample = utils.move_to_cuda(sample) if self.use_cuda else sample
 
